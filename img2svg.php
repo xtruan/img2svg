@@ -1,6 +1,6 @@
 <?php
 $target_dir = "uploads/";
-$target_file = $target_dir . time() . "_" . basename($_FILES["fileToUpload"]["name"]);
+$target_file = $target_dir . time() . "_" . str_replace(' ', '_', basename($_FILES["fileToUpload"]["name"]));
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 // Check if image file is a actual image or fake image
@@ -42,7 +42,12 @@ if ($uploadOk == 0) {
     }
 }
 
+// convert image to intermediate pnm
 exec('convert "' . $target_file . '" "'  . $target_file . '.pnm"');
+
+// trace intermediate pnm to final svg
 exec('potrace -s -o "' . $target_file . '.svg" "' . $target_file . '.pnm"');
-exec('rm -f ' . $target_file . '.pnm"');
+
+// delete intermediate pnm
+exec('rm -f "' . $target_file . '.pnm"');
 ?>
