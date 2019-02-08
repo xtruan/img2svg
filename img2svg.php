@@ -43,6 +43,6 @@ if ($uploadOk == 0) {
 }
 
 exec('convert "' . $target_file . '" "'  . $target_file . '.pnm"');
-exec('potrace -s -o "' . $target_file . '.svg" "' . $target_file . '.pnm"')
-exec('rm -f ' . $target_file . '.pnm"')
+exec('potrace -s -o "' . $target_file . '.svg" "' . $target_file . '.pnm"');
+exec('rm -f ' . $target_file . '.pnm"');
 ?>
