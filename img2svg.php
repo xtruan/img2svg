@@ -6,12 +6,13 @@ $hasError = 0;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 // Check if image file is a actual image or fake image
 if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-    if($check !== false) {
+    $check = exif_imagetype($_FILES["fileToUpload"]["tmp_name"]);
+    if($check == IMAGETYPE_PNG || $check == IMAGETYPE_GIF || 
+       $check == IMAGETYPE_JPEG || $check == IMAGETYPE_BMP) {
         //echo "File is an image - " . $check["mime"] . ". ";
         $uploadOk = 1;
     } else {
-        writeError("File is not an image.");
+        writeError("File is not an image (" . $check . ").");
         $uploadOk = 0;
     }
 }
@@ -27,8 +28,8 @@ if ($_FILES["fileToUpload"]["size"] > 32 * 1024 * 1024) {
 }
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" 
-    && $imageFileType != "gif" ) {
-    writeError("Sorry, only JPG, JPEG, PNG & GIF files are allowed.");
+    && $imageFileType != "gif" && $imageFileType != "bmp" ) {
+    writeError("Sorry, only JPG, JPEG, PNG, GIF & BMP files are allowed.");
     $uploadOk = 0;
 }
 // Check if $uploadOk is set to 0 by an error
