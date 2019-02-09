@@ -60,10 +60,12 @@ if ($uploadOk == 0) {
 }
 
 function writeError($message) {
+    global $hasError;
     if ($hasError == 0) {
         echo '<!DOCTYPE html><head><link href="css/img2svg.css" rel="stylesheet"></head>';
+        echo '<div class="error-text"><b>An error has occurred.</b></div>';
     }
     $hasError = 1;
-    echo '<div>' . $message . '</div>';
+    echo '<div class="error-text">' . $message . '</div>';
 }
 ?>

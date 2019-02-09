@@ -141,3 +141,10 @@ body {
   border: 0;
   transition: all .2s ease;
 }
+
+.error-text {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: #000000;
+    font-weight: 400;
+}
